@@ -3,6 +3,7 @@ import json
 import sqlite3
 from datetime import datetime
 from fastapi import FastAPI, BackgroundTasks, HTTPException
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
@@ -252,6 +253,8 @@ def get_signals(market_id: str):
 
 
 # ── Run directly with: python api.py ─────────────────────────────────────────
+app.mount("/", StaticFiles(directory=".", html=True), name="static")
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True)
