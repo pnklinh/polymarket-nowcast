@@ -1,12 +1,8 @@
 import os
 import json
 from datetime import datetime
-from anthropic import Anthropic
-from dotenv import load_dotenv
-
-load_dotenv()
-
-client = Anthropic()
+from groq import Groq
+client = Groq(api_key="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")
 
 # ── The prompt that IS your model ────────────────────────────────────────────
 SCORER_PROMPT = """You are a quantitative analyst for a prediction market nowcasting system.
@@ -89,13 +85,13 @@ def score_signal(raw: dict, market: dict) -> dict | None:
     )
 
     try:
-        response = client.messages.create(
-            model="claude-opus-4-5",
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
             max_tokens=400,
             messages=[{"role": "user", "content": prompt}]
-        )
-
+    )   
         raw_text = response.choices[0].message.content.strip()
+
 
         # Strip any accidental markdown code fences
         if raw_text.startswith("```"):
