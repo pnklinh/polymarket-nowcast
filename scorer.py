@@ -95,7 +95,7 @@ def score_signal(raw: dict, market: dict) -> dict | None:
             messages=[{"role": "user", "content": prompt}]
         )
 
-        raw_text = response.content[0].text.strip()
+        raw_text = response.choices[0].message.content.strip()
 
         # Strip any accidental markdown code fences
         if raw_text.startswith("```"):
