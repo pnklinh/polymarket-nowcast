@@ -1,0 +1,93 @@
+{
+  "fed_rate_cut_q2": {
+    "question": "Will the Fed cut rates in Q2 2026 (before July 1)?",
+    "polymarket_slug": "fed-cut-q2-2026",
+    "p_market": 0.72,
+    "sources": [
+      {
+        "id": "fed_speeches",
+        "url": "https://www.federalreserve.gov/newsevents/speech.htm",
+        "goal": "List all Fed governor speeches from the last 14 days. For each return: speaker name, date, title, and whether the tone is hawkish (against cuts) or dovish (for cuts) or neutral. Return as JSON array with keys: speaker, date, title, tone.",
+        "tier": "free",
+        "signal_strength": "high"
+      },
+      {
+        "id": "gdpnow",
+        "url": "https://www.atlantafed.org/cqer/research/gdpnow",
+        "goal": "Extract the current GDPNow GDP estimate for Q1 2026 and the date it was last updated. Return JSON with keys: estimate, previous_estimate, last_updated.",
+        "tier": "free",
+        "signal_strength": "high"
+      },
+      {
+        "id": "beige_book",
+        "url": "https://www.federalreserve.gov/monetarypolicy/beigebook.htm",
+        "goal": "Extract the most recent Beige Book release. Return JSON with keys: release_date, overall_tone (one of: expanding, slowing, contracting), key_phrases (array of the 3 most important quoted phrases about inflation or employment).",
+        "tier": "free",
+        "signal_strength": "very_high"
+      },
+      {
+        "id": "cme_fedwatch",
+        "url": "https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html",
+        "goal": "Find the current probability of a Fed rate cut at the next FOMC meeting according to FedWatch. Return JSON with keys: next_meeting_date, cut_probability, hold_probability, hike_probability.",
+        "tier": "tinyfish",
+        "signal_strength": "medium"
+      },
+      {
+        "id": "bls_jobs",
+        "url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+        "goal": "Extract the most recent employment situation summary. Return JSON with keys: release_date, jobs_added, unemployment_rate, wage_growth_yoy, summary_sentence.",
+        "tier": "free",
+        "signal_strength": "very_high"
+      }
+    ]
+  },
+  "btc_100k": {
+    "question": "Will Bitcoin exceed $100,000 by end of Q2 2026?",
+    "polymarket_slug": "btc-100k-q2-2026",
+    "p_market": 0.65,
+    "sources": [
+      {
+        "id": "sec_filings",
+        "url": "https://efts.sec.gov/LATEST/search-index?q=%22bitcoin%22&dateRange=custom&startdt=2026-03-01&enddt=2026-03-21&forms=8-K",
+        "goal": "Find recent 8-K filings mentioning Bitcoin from large companies. Return JSON array with keys: company, date, summary of what they said about Bitcoin.",
+        "tier": "free",
+        "signal_strength": "high"
+      },
+      {
+        "id": "coindesk_news",
+        "url": "https://www.coindesk.com/markets/",
+        "goal": "Extract the top 5 most recent Bitcoin market news headlines and their publication times. Return JSON array with keys: headline, time, sentiment (bull/bear/neutral), summary.",
+        "tier": "tinyfish",
+        "signal_strength": "medium"
+      },
+      {
+        "id": "etf_flows",
+        "url": "https://farside.co.uk/bitcoin-etf-flow-all-data/",
+        "goal": "Extract the Bitcoin ETF flow data for the last 5 trading days. Return JSON with keys: total_net_flow_5d, largest_single_day_inflow, largest_single_day_outflow, trend (increasing/decreasing/flat).",
+        "tier": "tinyfish",
+        "signal_strength": "high"
+      }
+    ]
+  },
+  "eth_etf": {
+    "question": "Will an Ethereum spot ETF be approved before July 2026?",
+    "polymarket_slug": "eth-etf-approved-2026",
+    "p_market": 0.48,
+    "sources": [
+      {
+        "id": "sec_eth_filings",
+        "url": "https://efts.sec.gov/LATEST/search-index?q=%22ethereum%22+%22ETF%22&dateRange=custom&startdt=2026-01-01&forms=19b-4",
+        "goal": "Find recent SEC filings related to Ethereum ETF applications. Return JSON array with keys: applicant, filing_date, filing_type, status, key_detail.",
+        "tier": "free",
+        "signal_strength": "very_high"
+      },
+      {
+        "id": "sec_calendar",
+        "url": "https://www.sec.gov/litigation/upcoming.shtml",
+        "goal": "Find any upcoming SEC hearings or deadlines related to cryptocurrency ETF applications. Return JSON array with keys: date, description, relevance_to_eth_etf.",
+        "tier": "free",
+        "signal_strength": "high"
+      }
+    ]
+  }
+}
