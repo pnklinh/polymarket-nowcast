@@ -888,7 +888,7 @@
 
 <script>
 // ===== CONFIG =====
-const API_BASE = 'http://localhost:8000';
+const API_BASE = window.location.origin.replace('-3000.', '-8000.');
 
 // Market IDs must match keys in backend/source_maps.json
 const MARKET_IDS = ['btc_100k', 'eth_etf', 'fed_rate_cut_q2'];
