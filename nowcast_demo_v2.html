@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>NowCast — Information Latency Detector</title>
+<title>NowCast — Real-Time Information Edge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
@@ -712,8 +712,8 @@
   <div class="logo">
     <div class="logo-mark"></div>
     <div>
-      <div class="logo-text">NOWCAST</div>
-      <div class="logo-sub">Information Latency Detector</div>
+      <div class="logo-text">DELTANOW</div>
+      <div class="logo-sub">Real-Time Information Edge</div>
     </div>
   </div>
   <div class="header-status">
@@ -735,6 +735,8 @@
         <button class="mkt-tab active" onclick="switchMarket(0,this)">BTC &gt; $100K</button>
         <button class="mkt-tab" onclick="switchMarket(1,this)">ETH ETF Approved</button>
         <button class="mkt-tab" onclick="switchMarket(2,this)">Fed Rate Cut Q2</button>
+        <button class="mkt-tab" onclick="switchMarket(3,this)">Ukraine Ceasefire</button>
+        <button class="mkt-tab" onclick="switchMarket(4,this)">US-Iran Strike</button>
       </div>
 
       <div class="market-header">
@@ -873,7 +875,7 @@
     <!-- RUN -->
     <div class="card">
       <div class="card-label">Control</div>
-      <button class="run-btn" id="run-btn" onclick="runScan()">⚡ RUN NOWCAST SCAN</button>
+      <button class="run-btn" id="run-btn" onclick="runScan()">⚡ RUN DELTANOW SCAN</button>
     </div>
 
     <!-- SYSTEM LOG -->
@@ -895,7 +897,9 @@ const MARKET_IDS = ['btc_100k', 'eth_etf', 'fed_rate_cut_q2'];
 let MARKETS = [
   { id: 'btc_100k',         question: "Will Bitcoin exceed $100,000 by end of Q2 2026?",         vol: "—",     pMarket: 0.65, news: [] },
   { id: 'eth_etf',          question: "Will an Ethereum spot ETF be approved before July 2026?",  vol: "—",     pMarket: 0.48, news: [] },
-  { id: 'fed_rate_cut_q2',  question: "Will the Fed cut rates in Q2 2026 (before July 1)?",       vol: "—",     pMarket: 0.72, news: [] }
+  { id: 'fed_rate_cut_q2',  question: "Will the Fed cut rates in Q2 2026 (before July 1)?",       vol: "—",     pMarket: 0.72, news: [] },
+  { id: 'ukraine_ceasefire',question: "Will Russia and Ukraine agree to a ceasefire by March 31, 2026?", vol: "—", pMarket: 0.04, news: [] },
+  { id: 'iran_us_conflict', question: "Will the US conduct further military strikes on Iran in Q2 2026?", vol: "—", pMarket: 0.35, news: [] }
 ];
 
 let currentMarket = 0;
@@ -1143,7 +1147,7 @@ function switchMarket(idx, btn) {
   drawSparkline(m.pMarket);
 }
 
-// ===== COMPOSITE NOWCAST =====
+// ===== COMPOSITE DELTANOW =====
 // Single source of truth — called any time params change
 function recomputeNowcast() {
   const mkt = MARKETS[currentMarket];
@@ -1235,7 +1239,7 @@ async function runScan() {
     await sleep(800);
     recomputeNowcast();
     selectNews(0);
-    btn.textContent = '⚡ RUN NOWCAST SCAN';
+    btn.textContent = '⚡ RUN DELTANOW SCAN';
     btn.classList.remove('running');
     isRunning = false;
     return;
@@ -1245,7 +1249,7 @@ async function runScan() {
 
   // Poll for results — backend scan takes 15–60s depending on sources
   let attempts = 0;
-  const maxAttempts = 30; // 30 × 2s = 60s max wait
+  const maxAttempts = 200; // 200 × 2s = 400s max wait
   const pollInterval = 2000;
 
   const poll = setInterval(async () => {
@@ -1279,11 +1283,12 @@ async function runScan() {
         updateProbDisplay(data.crowd_price, data.nowcast, data.delta);
         updateFormulaDisplay(data.crowd_price, data.delta / alpha || 0, data.nowcast, data.delta);
 
-        btn.textContent = '⚡ RUN NOWCAST SCAN';
+        btn.textContent = '⚡ RUN DELTANOW SCAN';
         btn.classList.remove('running');
         isRunning = false;
 
-        if (mkt.news.length > 0) selectNews(0);
+        mkt._lastNowcast = data;
+if (mkt.news.length > 0) selectNews(0);
         return;
       }
     }
@@ -1292,7 +1297,7 @@ async function runScan() {
       clearInterval(poll);
       addLog('[Timeout] Scan took too long — check backend logs', 'warn');
       recomputeNowcast();
-      btn.textContent = '⚡ RUN NOWCAST SCAN';
+      btn.textContent = '⚡ RUN DELTANOW SCAN';
       btn.classList.remove('running');
       isRunning = false;
     } else {
@@ -1319,7 +1324,7 @@ const SOURCE_MAPS_COUNT = { btc_100k: 3, eth_etf: 2, fed_rate_cut_q2: 5 };
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 // ===== INIT =====
-addLog('[System] NowCast v2.0 initialized', 'success');
+addLog('[System] DeltaNow v1.0 initialized', 'success');
 addLog('[System] Connecting to backend...', 'fetch');
 renderNews(0);
 drawSparkline(0.65);
