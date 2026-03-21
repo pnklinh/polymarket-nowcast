@@ -2,8 +2,7 @@ import os
 import json
 from datetime import datetime
 from groq import Groq
-client = Groq(api_key="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")
-
+client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 # ── The prompt that IS your model ────────────────────────────────────────────
 SCORER_PROMPT = """You are a quantitative analyst for a prediction market nowcasting system.
 
