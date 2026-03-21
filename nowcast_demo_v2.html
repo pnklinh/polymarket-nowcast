@@ -1071,8 +1071,7 @@ function selectNews(idx) {
     document.getElementById('sig-rec').className = 'signal-val yellow';
   }
 
-  updateFormulaDisplay(pMkt, signal, pAI, edge);
-  updateProbDisplay(pMkt, pAI, edge);
+  if (lastNowcast) { updateProbDisplay(lastNowcast.crowd_price, lastNowcast.nowcast, lastNowcast.delta); updateFormulaDisplay(lastNowcast.crowd_price, lastNowcast.delta, lastNowcast.nowcast, lastNowcast.delta); } else { updateProbDisplay(pMkt, pAI, edge); updateFormulaDisplay(pMkt, signal, pAI, edge); }
 }
 
 // ===== UPDATE DISPLAYS =====
