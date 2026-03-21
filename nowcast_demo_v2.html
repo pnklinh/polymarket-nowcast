@@ -1153,23 +1153,8 @@ function recomputeNowcast() {
   const mkt = MARKETS[currentMarket];
 
   // Which sources are active?
-  const activeChips = Array.from(document.querySelectorAll('.chip.active'))
-    .map(el => el.textContent.trim());
-
-  // Filter news to active sources only
-  const activeNews_list = mkt.news.filter(n => activeChips.includes(n.source));
-
-  if (activeNews_list.length === 0) {
-    // No sources selected — reset to standby
-    updateProbDisplay(mkt.pMarket, mkt.pMarket, 0);
-    updateFormulaDisplay(mkt.pMarket, 0, mkt.pMarket, 0);
-    addLog('[Filter] No active sources — select at least one source', 'warn');
-    return;
-  }
-
-  // Weighted average signal across active sources (recency-weighted)
-  const weights = [1.0, 0.8, 0.5, 0.3];
-  let weightedSignal = 0, totalW = 0;
+  const activeNews_list = mkt.news;
+  if (activeNews_list.length === 0) return;
   activeNews_list.forEach((n, i) => {
     const w = weights[i] || 0.2;
     weightedSignal += n.score * w;
