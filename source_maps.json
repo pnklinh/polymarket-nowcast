@@ -89,5 +89,61 @@
         "signal_strength": "high"
       }
     ]
+  },
+"ukraine_ceasefire": {
+    "question": "Will Russia and Ukraine agree to a ceasefire by March 31, 2026?",
+    "polymarket_slug": "russia-ukraine-ceasefire-march-2026",
+    "p_market": 0.04,
+    "sources": [
+      {
+        "id": "un_security_council",
+        "url": "https://www.un.org/securitycouncil/content/resolutions-0",
+        "goal": "Find any recent UN Security Council resolutions or emergency sessions related to Russia, Ukraine, or ceasefire negotiations in the last 7 days. Return JSON array with keys: date, title, summary, ceasefire_mentioned.",
+        "tier": "free",
+        "signal_strength": "very_high"
+      },
+      {
+        "id": "ukrainian_gov",
+        "url": "https://www.president.gov.ua/en/news",
+        "goal": "Extract the latest official statements from the Ukrainian presidency. Return JSON array with keys: date, title, key_statement, tone_toward_ceasefire.",
+        "tier": "free",
+        "signal_strength": "high"
+      },
+      {
+        "id": "isw_ukraine",
+        "url": "https://understandingwar.org/backgrounder/ukraine-conflict-updates",
+        "goal": "Extract the latest ISW Ukraine situation update. Return JSON with keys: date, front_line_summary, negotiation_signals, escalation_level.",
+        "tier": "free",
+        "signal_strength": "high"
+      }
+    ]
+  },
+  "iran_us_conflict": {
+    "question": "Will the US conduct further military strikes on Iran in Q2 2026?",
+    "polymarket_slug": "us-iran-military-strike-q2-2026",
+    "p_market": 0.35,
+    "sources": [
+      {
+        "id": "pentagon_releases",
+        "url": "https://www.defense.gov/News/Releases/",
+        "goal": "Extract the latest Pentagon press releases. Return JSON array with keys: date, title, summary, mentions_iran.",
+        "tier": "free",
+        "signal_strength": "very_high"
+      },
+      {
+        "id": "state_department",
+        "url": "https://www.state.gov/press-releases/",
+        "goal": "Extract latest State Department press releases about Iran or Middle East. Return JSON array with keys: date, title, summary, tone (escalatory/diplomatic/neutral).",
+        "tier": "free",
+        "signal_strength": "very_high"
+      },
+      {
+        "id": "isw_iran",
+        "url": "https://understandingwar.org/backgrounder/iran-update",
+        "goal": "Extract the latest ISW Iran situation report. Return JSON with keys: date, military_activity, threat_level, key_developments.",
+        "tier": "free",
+        "signal_strength": "high"
+      }
+    ]
   }
 }
