@@ -24,7 +24,7 @@ For each active Polymarket market, DeltaNow:
 
 ### Stack
 
-`Python` `FastAPI` `TinyFish` `Groq (LLaMA 3.3 70B)` `Polymarket API` `SQLite` `React`
+`Python` `FastAPI` `TinyFish` `Groq (LLaMA 3.3 70B)` `Polymarket API` `SQLite` `Javascript`
 
 ### Known limitations
 
